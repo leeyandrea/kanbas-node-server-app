@@ -1,5 +1,5 @@
 import express from 'express';
-import * as enrollmentsDao from "../Enrollments/dao.js";
+import * as enrollmentsDao from "./dao.js";
 
 const router = express.Router();
 
