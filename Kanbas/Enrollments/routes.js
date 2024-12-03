@@ -10,13 +10,11 @@ export default function EnrollmentRoutes(app) {
         const { userId, courseId } = req.body;
 
         try {
-            // Check if already enrolled
             const existingEnrollment = enrollmentsDao.findEnrollmentByCourseAndUser(userId, courseId);
             if (existingEnrollment) {
                 return res.status(400).json({ message: 'Already enrolled' });
             }
 
-            // Enroll user
             const enrollment = enrollmentsDao.enrollUserInCourse(userId, courseId);
             res.status(201).json(enrollment);
         } catch (error) {
