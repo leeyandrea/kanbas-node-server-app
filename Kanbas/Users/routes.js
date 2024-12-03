@@ -2,10 +2,10 @@ import * as dao from "./Dao.js";
 import * as courseDao from "../Courses/dao.js";
 import * as enrollmentsDao from "../Enrollments/dao.js";
 export default function UserRoutes(app) {
-    const createCourse = (req, res) => {
+    const createCourse = async (req, res) => {
         const currentUser = req.session["currentUser"];
-        const newCourse = courseDao.createCourse(req.body);
-        enrollmentsDao.enrollUserInCourse(currentUser._id, newCourse._id);
+        const newCourse = await courseDao.createCourse(req.body);
+        await enrollmentsDao.enrollUserInCourse(currentUser._id, newCourse._id);
         res.json(newCourse);
     };
     app.post("/api/users/current/courses", createCourse);
@@ -17,11 +17,11 @@ export default function UserRoutes(app) {
     };
 
     const findUserById = (req, res) => { };
-    const updateUser = (req, res) => {
+    const updateUser = async (req, res) => {
         const userId = req.params.userId;
         const userUpdates = req.body;
-        dao.updateUser(userId, userUpdates);
-        const currentUser = dao.findUserById(userId);
+        await dao.updateUser(userId, userUpdates);
+        const currentUser = await dao.findUserById(userId);
         req.session["currentUser"] = currentUser;
         res.json(currentUser);
     };
@@ -47,11 +47,11 @@ export default function UserRoutes(app) {
             res.status(401).json({ message: "Unable to login. Try again later." });
         }
     };
-    const signout = (req, res) => {
+    const signout = async (req, res) => {
         req.session.destroy();
         res.sendStatus(200);
     };
-    const profile = (req, res) => {
+    const profile = async (req, res) => {
         const currentUser = req.session["currentUser"];
         if (!currentUser) {
             res.sendStatus(401);
@@ -59,7 +59,7 @@ export default function UserRoutes(app) {
         }
         res.json(currentUser);
     };
-    const findCoursesForEnrolledUser = (req, res) => {
+    const findCoursesForEnrolledUser = async (req, res) => {
         let { userId } = req.params;
         if (userId === "current") {
             const currentUser = req.session["currentUser"];
@@ -69,7 +69,7 @@ export default function UserRoutes(app) {
             }
             userId = currentUser._id;
         }
-        const courses = courseDao.findCoursesForEnrolledUser(userId);
+        const courses = await courseDao.findCoursesForEnrolledUser(userId);
         res.json(courses);
     };
     app.get("/api/users/:userId/courses", findCoursesForEnrolledUser);
