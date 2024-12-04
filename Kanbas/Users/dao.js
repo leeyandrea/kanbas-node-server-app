@@ -16,7 +16,3 @@ export const findUsersByPartialName = (partialName) => {
         $or: [{ firstName: { $regex: regex } }, { lastName: { $regex: regex } }],
     });
 };
-
-
-
-
