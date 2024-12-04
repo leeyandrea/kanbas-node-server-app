@@ -1,4 +1,5 @@
-import Database from "../Database/index.js";
+// import Database from "../Database/index.js";
+import model from "./model.js";
 export function deleteCourse(courseId) {
     const { courses, enrollments } = Database;
     Database.courses = courses.filter((course) => course._id !== courseId);
@@ -7,7 +8,8 @@ export function deleteCourse(courseId) {
     );
 }
 export function findAllCourses() {
-    return Database.courses;
+    // return Database.courses;
+    return model.find();
 }
 export function findCoursesForEnrolledUser(userId) {
     const { courses, enrollments } = Database;

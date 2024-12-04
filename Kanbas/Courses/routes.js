@@ -10,8 +10,8 @@ export default function CourseRoutes(app) {
         const newModule = modulesDao.createModule(module);
         res.send(newModule);
     });
-    app.get("/api/courses", (req, res) => {
-        const courses = dao.findAllCourses();
+    app.get("/api/courses", async (req, res) => {
+        const courses = await dao.findAllCourses();
         res.send(courses);
     });
     app.delete("/api/courses/:courseId", (req, res) => {
@@ -30,6 +30,11 @@ export default function CourseRoutes(app) {
         const modules = modulesDao.findModulesForCourse(courseId);
         res.json(modules);
     });
+    app.post("/api/courses", async (req, res) => {
+        const course = await dao.createCourse(req.body);
+        res.json(course);
+    });
+
 
 
 }
