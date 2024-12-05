@@ -5,6 +5,9 @@ const courseSchema = new mongoose.Schema(
         number: String,
         credits: Number,
         description: String,
+        department: String,
+        startDate: Date,
+        endDate: Date,
     },
     { collection: "courses" }
 );
