@@ -60,6 +60,4 @@ export default function CourseRoutes(app) {
         res.json(users);
     };
     app.get("/api/courses/:cid/users", findUsersForCourse);
-
-
 }
