@@ -50,5 +50,4 @@ export default function WorkingWithObjects(app) {
         module.description = newDesc;
         res.json(module);
     });
-
 };
